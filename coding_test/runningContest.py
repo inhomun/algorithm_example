@@ -1,13 +1,10 @@
 def solution(num_list):
-    sumA = 1
-    sumB = 0
+    oddNum = ''
+    evenNum = ''
     for i in num_list:
-        sumA *= i
-        sumB += i
-
-    sumB = pow(sumB, 2)
-
-    if sumA < sumB:
-        return 1
-    elif sumA > sumB:
-        return 0
+        if i%2 :
+            oddNum += str(i)
+        else :
+            evenNum += str(i)
+    answer = int(oddNum) + int(evenNum)
+    return answer
