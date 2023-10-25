@@ -1,7 +1,13 @@
-def solution(a, b, c):
-    if a==b and b==c:
-        return (a+b+c)*(pow(a, 2)+pow(b, 2)+pow(c, 2))*(pow(a, 3)+pow(b, 3)+pow(c, 3))
-    elif a==b or b==c or a==c:
-        return (a+b+c)*(pow(a, 2)+pow(b, 2)+pow(c, 2))
-    elif a!=b and b!=c and a!=c:
-        return a+b+c
+def solution(num_list):
+    sumA = 1
+    sumB = 0
+    for i in num_list:
+        sumA *= i
+        sumB += i
+
+    sumB = pow(sumB, 2)
+
+    if sumA < sumB:
+        return 1
+    elif sumA > sumB:
+        return 0
