@@ -6,21 +6,42 @@
 //
 import Foundation
 
-func solution(_ n:Int) -> Int {
-    var sum = 0
-    if n%2 == 1 {
-        for i in 0...n {
-            if i%2 == 1 {
-                sum += i
+func solution(_ ineq:String, _ eq:String, _ n:Int, _ m:Int) -> Int {
+    if ineq == "<" {
+        if eq == "=" {
+            if n<=m {
+                return 1
+            }
+            else {
+                return 0
+            }
+        }
+        else {
+            if n<m {
+                return 1
+            }
+            else {
+                return 0
             }
         }
     }
     else {
-        for i in 0...n+1 {
-            if i%2 == 0 {
-                sum += i*i
+        if eq == "=" {
+            if n>=m {
+                return 1
+            }
+            else {
+                return 0
+            }
+        }
+        else {
+            if n>m {
+                return 1
+            }
+            else {
+                return 0
             }
         }
     }
-    return sum
+    return 0
 }
