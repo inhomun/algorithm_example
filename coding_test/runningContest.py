@@ -1,10 +1,4 @@
 def solution(num_list):
-    oddNum = ''
-    evenNum = ''
-    for i in num_list:
-        if i%2 :
-            oddNum += str(i)
-        else :
-            evenNum += str(i)
-    answer = int(oddNum) + int(evenNum)
-    return answer
+    answer = num_list[-1] - num_list[-2] if num_list[-1] > num_list[-2] else (num_list[-1] * 2)
+    num_list.append(answer)
+    return num_list
