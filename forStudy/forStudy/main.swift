@@ -6,42 +6,22 @@
 //
 import Foundation
 
-func solution(_ ineq:String, _ eq:String, _ n:Int, _ m:Int) -> Int {
-    if ineq == "<" {
-        if eq == "=" {
-            if n<=m {
-                return 1
-            }
-            else {
-                return 0
-            }
-        }
-        else {
-            if n<m {
-                return 1
-            }
-            else {
-                return 0
-            }
+func solution(_ numLog: [Int]) -> String {
+    var result = ""
+    for i in 1..<numLog.count {
+        let diff = numLog[i] - numLog[i-1]
+        switch diff {
+        case 1:
+            result.append("w")
+        case -1:
+            result.append("s")
+        case 10:
+            result.append("d")
+        case -10:
+            result.append("a")
+        default:
+            continue
         }
     }
-    else {
-        if eq == "=" {
-            if n>=m {
-                return 1
-            }
-            else {
-                return 0
-            }
-        }
-        else {
-            if n>m {
-                return 1
-            }
-            else {
-                return 0
-            }
-        }
-    }
-    return 0
+    return result
 }
