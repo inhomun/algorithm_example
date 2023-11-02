@@ -6,20 +6,16 @@
 //
 import Foundation
 
-func solution(_ cards1:[String], _ cards2:[String], _ goal:[String]) -> String {
-    var valA = 0
-    var valB = 0
-    
-    for i in goal {
-        if valA < cards1.count && i == cards1[valA] {
-            valA += 1
-        }
-        else if valB < cards2.count && i == cards2[valB] {
-            valB += 1
-        }
-        else {
-            return "No"
+func solution(_ wallpaper:[String]) -> [Int] {
+    var answer : [Int] = []
+    var luy : [Int] = []
+    for (idx, i) in wallpaper.enumerated() {
+        for (idx1, j) in i.enumerated() {
+            if j == "#" {
+                luy.append(idx)
+                answer.append(idx1)
+            }
         }
     }
-    return "Yes"
+    return [luy.min()!, answer.min()! , luy.max()!+1, answer.max()!+1]
 }
