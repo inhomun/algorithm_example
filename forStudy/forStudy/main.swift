@@ -4,22 +4,22 @@
 //
 //  Created by 문인호 on 2023/01/27.
 //
-func solution(_ arr: [Int], _ queries: [[Int]]) -> [Int] {
-    var result = [Int]()
+import Foundation
+
+func solution(_ cards1:[String], _ cards2:[String], _ goal:[String]) -> String {
+    var valA = 0
+    var valB = 0
     
-    for query in queries {
-        let s = query[0]
-        let e = query[1]
-        let k = query[2]
-        
-        let subArr = Array(arr[s...e])
-        let filteredArr = subArr.filter { $0 > k }
-        if let minValue = filteredArr.min() {
-            result.append(minValue)
-        } else {
-            result.append(-1)
+    for i in goal {
+        if valA < cards1.count && i == cards1[valA] {
+            valA += 1
+        }
+        else if valB < cards2.count && i == cards2[valB] {
+            valB += 1
+        }
+        else {
+            return "No"
         }
     }
-    
-    return result
+    return "Yes"
 }
