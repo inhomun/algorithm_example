@@ -4,18 +4,28 @@
 //
 //  Created by 문인호 on 2023/01/27.
 //
-import Foundation
-
-func solution(_ wallpaper:[String]) -> [Int] {
-    var answer : [Int] = []
-    var luy : [Int] = []
-    for (idx, i) in wallpaper.enumerated() {
-        for (idx1, j) in i.enumerated() {
-            if j == "#" {
-                luy.append(idx)
-                answer.append(idx1)
+func solution(_ keymap: [String], _ targets: [String]) -> [Int] {
+    var keys: [Character: (Int, Int)] = [:]
+    for (i, key) in keymap.enumerated() {
+        for (j, char) in key.enumerated() {
+            if let existingValue = keys[char], existingValue.1 <= j+1 {
+                continue
             }
+            keys[char] = (i+1, j+1)
         }
     }
-    return [luy.min()!, answer.min()! , luy.max()!+1, answer.max()!+1]
+
+    var result: [Int] = []
+    for target in targets {
+        var count = 0
+        for char in target {
+            guard let key = keys[char] else {
+                count = -1
+                break
+            }
+            count += key.1
+        }
+        result.append(count)
+    }
+    return result
 }
