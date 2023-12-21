@@ -6,31 +6,20 @@
 //
 import Foundation
 
-func solution(_ s:String) -> Int {
-    var firstChar : Character?
-    var result = 0
-    var cnt = 0
-    var notcnt = 0
-    for i in s {
-        if firstChar == nil {
-            firstChar = i
-        }
-        
-        if i == firstChar {
-            cnt += 1
-        } else {
-            notcnt += 1
-        }
-        
-        if cnt == notcnt {
-            result += 1
-            cnt = 0
-            notcnt = 0
-            firstChar = nil
+func solution(_ food: [Int]) -> String {
+    var foodArr = food
+    var result = ""
+    var tempArr = [String]()
+    
+    for i in 1..<foodArr.count {
+        var j = foodArr[i] / 2
+        for l in 0..<j{
+            result += String(i)
+            tempArr.insert(String(i), at: 0)
         }
     }
-        if cnt != 0 || notcnt != 0 {
-            result += 1
-        }
+    
+    result += "0" + tempArr.joined()
+    
     return result
 }
