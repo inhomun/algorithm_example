@@ -6,20 +6,21 @@
 //
 import Foundation
 
-func solution(_ food: [Int]) -> String {
-    var foodArr = food
-    var result = ""
-    var tempArr = [String]()
+func solution(_ ingredient:[Int]) -> Int {
+   var stack = [Int]()
+    let burger = [1, 2, 3, 1]
+    var hamcnt = 0
     
-    for i in 1..<foodArr.count {
-        var j = foodArr[i] / 2
-        for l in 0..<j{
-            result += String(i)
-            tempArr.insert(String(i), at: 0)
+    for i in ingredient {
+        stack.append(i)
+        
+        if stack.count >= 4 {
+            if Array(stack.suffix(4)) == burger {
+                hamcnt += 1
+                stack.removeLast(4)
+            }
         }
     }
     
-    result += "0" + tempArr.joined()
-    
-    return result
+    return hamcnt
 }
