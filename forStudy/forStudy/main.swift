@@ -6,21 +6,12 @@
 //
 import Foundation
 
-func solution(_ ingredient:[Int]) -> Int {
-   var stack = [Int]()
-    let burger = [1, 2, 3, 1]
-    var hamcnt = 0
-    
-    for i in ingredient {
-        stack.append(i)
-        
-        if stack.count >= 4 {
-            if Array(stack.suffix(4)) == burger {
-                hamcnt += 1
-                stack.removeLast(4)
-            }
+func solution(_ cipher:String, _ code:Int) -> String {
+    var answer = ""
+    for (idx, i) in cipher.enumerated() {
+        if (idx+1) % code == 0 {
+            answer.append(String(i))
         }
     }
-    
-    return hamcnt
+    return answer
 }
