@@ -7,19 +7,25 @@
 
 import Foundation
 
-func solution(_ babbling:[String]) -> Int {
-    let filter = ["aya", "ye", "woo", "ma"]
-    var count = 0
-    for i in babbling {
-        var tmp = ""
-        for j in filter {
-            if i.range(of: j) != nil {
-            tmp += j
+func solution(_ k:Int, _ score:[Int]) -> [Int] {
+    var tmp = [Int]()
+    var answer = [Int]()
+    for (idx, i) in score.enumerated() {
+        if idx < k {
+            tmp.append(i)
+            tmp.sort(by: { $0 > $1 } )
+            answer.append(tmp[idx])
         }
-        }
-        if tmp.count == i.count {
-            count += 1
+        else {
+            if i > tmp[k-1] {
+                tmp[k-1] = i
+                tmp.sort(by: { $0 > $1 } )
+                answer.append(tmp[k-1])
+            }
+            else {
+                answer.append(tmp[k-1])
+            }
         }
     }
-    return count
+    return answer
 }
