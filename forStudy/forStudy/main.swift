@@ -6,13 +6,15 @@
 //
 import Foundation
 
-func solution(_ myString:String, _ pat:String) -> Int {
-    var a = myString.lowercased()
-    var b = pat.lowercased()
-    if a.contains(b) {
-        return 1
+func solution(_ strArr:[String]) -> [String] {
+    var answer = [String]()
+    for i in strArr {
+        if i.contains("ad") {
+            continue
+        }
+        else {
+            answer.append(i)
+        }
     }
-    else {
-    return 0
-    }
+    return answer
 }
