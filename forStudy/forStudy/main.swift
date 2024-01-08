@@ -6,9 +6,10 @@
 //
 import Foundation
 
-func solution(_ n:Int) -> Int {
-    let ternary = String(n, radix: 3)
-    let reversedTernary = String(ternary.reversed())
-    let decimal = Int(reversedTernary, radix: 3)
-    return decimal!
+func solution(_ a:[Int], _ b:[Int]) -> Int {
+    var answer = 0
+    for i in 0...a.count-1 {
+        answer += a[i]*b[i]
+    }
+    return answer
 }
