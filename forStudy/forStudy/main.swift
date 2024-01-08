@@ -4,24 +4,23 @@
 //
 //  Created by 문인호 on 2023/01/27.
 //
-
 import Foundation
 
-func solution(_ price:Int, _ money:Int, _ count:Int) -> Int64{
-    var answer:Int64 = -1
-    func fact (_ num : Int ) -> Int {
-        if num == 0 {
-            return 0
+func solution(_ left:Int, _ right:Int) -> Int {
+    var answer = 0
+    for i in left...right {
+        var tmp = 0
+        for j in 1...i {
+            if i % j == 0 {
+                tmp += 1
+            }
         }
-        else {
-        return num * price + fact(num-1)
-        }
+        if tmp % 2 == 0 {
+                answer += i
+            }
+            else {
+                answer -= i
+            }
     }
-    let num = fact(count)
-    if num > money {
-        return Int64(num - money)
-    }
-    else {
-        return 0
-    }
+    return answer
 }
