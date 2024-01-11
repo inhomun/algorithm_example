@@ -4,12 +4,18 @@
 //
 //  Created by 문인호 on 2023/01/27.
 //
-var result = [Int]()
-    for i in 0..<numbers.count {
-        for j in i+1..<numbers.count {
-            result.append(numbers[i] + numbers[j])
+import Foundation
+
+func solution(_ my_string:String) -> String {
+    var answer = ""
+    for i in my_string {
+        if answer.contains(i) {
+            continue
         }
+        else {
+            answer.append(i)
+        }
+        
     }
-    let sortedResult = Array(Set(result)).sorted()
-    return sortedResult
+    return answer
 }
