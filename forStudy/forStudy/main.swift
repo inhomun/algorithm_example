@@ -4,18 +4,12 @@
 //
 //  Created by 문인호 on 2023/01/27.
 //
-import Foundation
-
-func solution(_ my_string:String) -> String {
-    var answer = ""
-    for i in my_string {
-        if answer.contains(i) {
-            continue
+func solution(_ seoul:[String]) -> String {
+    var answer = 0
+    for (idx, i) in seoul.enumerated() {
+        if i == "Kim" {
+            answer = idx
         }
-        else {
-            answer.append(i)
-        }
-        
     }
-    return answer
+    return "김서방은 \(answer)에 있다"
 }
