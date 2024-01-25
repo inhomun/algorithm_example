@@ -6,6 +6,16 @@
 //
 import Foundation
 
-func solution(_ a:Int, _ b:Int) -> Int {
-    return Int(String(a)+String(b))! > Int(String(b)+String(a))! ? Int(String(a)+String(b))! : Int(String(b)+String(a))!
+func solution(_ n:Int) -> Int {
+    var answer = 0
+    for i in 1...100 {
+        if ( i * 6 ) % n == 0 {
+            answer = i
+            break
+        }
+        else {
+            continue
+        }
+    }
+    return answer
 }
