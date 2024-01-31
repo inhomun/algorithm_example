@@ -6,16 +6,11 @@
 //
 import Foundation
 
-func solution(_ n:Int) -> Int {
-    var answer = 0
-    for i in 1...100 {
-        if ( i * 6 ) % n == 0 {
-            answer = i
-            break
-        }
-        else {
-            continue
-        }
+func solution(_ my_string:String, _ queries:[[Int]]) -> String {
+    var chars = Array(my_string)
+    for i in queries {
+    let rev = chars[i[0]...i[1]].reversed()
+    chars.replaceSubrange(i[0]...i[1], with: rev)
     }
-    return answer
+    return String(chars)
 }
