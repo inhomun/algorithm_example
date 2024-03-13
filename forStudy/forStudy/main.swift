@@ -6,11 +6,13 @@
 //
 import Foundation
 
-func solution(_ my_string:String, _ queries:[[Int]]) -> String {
-    var chars = Array(my_string)
-    for i in queries {
-    let rev = chars[i[0]...i[1]].reversed()
-    chars.replaceSubrange(i[0]...i[1], with: rev)
+func solution(_ a:Int, _ b:Int) -> String {
+    let date = [0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+    let day = ["THU","FRI","SAT","SUN","MON","TUE","WED"]
+    var temp = 0
+    for i in date[0...a-1] {
+        temp += i
     }
-    return String(chars)
+    temp += b
+    return day[temp % 7]
 }
