@@ -6,6 +6,16 @@
 //
 import Foundation
 
-func solution(_ s:String) -> String {
-    return String(Array(s).sorted{ $0 > $1 })
+func solution(_ s:String) -> Bool {
+    if s.count == 4 || s.count == 6 {
+        if let a = Int(s) {
+            return true
+        }
+        else {
+            return false
+        }
+    }
+    else {
+    return false
+    }
 }
