@@ -6,7 +6,6 @@
 //
 import Foundation
 
-func solution(_ arr:[Int], _ divisor:Int) -> [Int] {
-    let check = arr.filter { ($0)%divisor == 0 }
-return check.count == 0 ? [-1] : check.sorted()
+func solution(_ strings:[String], _ n:Int) -> [String] {
+    return strings.sorted { Array($0)[n] == Array($1)[n] ? $0 < $1 : Array($0)[n] < Array($1)[n]}
 }
