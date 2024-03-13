@@ -6,13 +6,7 @@
 //
 import Foundation
 
-func solution(_ a:Int, _ b:Int) -> String {
-    let date = [0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
-    let day = ["THU","FRI","SAT","SUN","MON","TUE","WED"]
-    var temp = 0
-    for i in date[0...a-1] {
-        temp += i
-    }
-    temp += b
-    return day[temp % 7]
+func solution(_ arr:[Int], _ divisor:Int) -> [Int] {
+    let check = arr.filter { ($0)%divisor == 0 }
+return check.count == 0 ? [-1] : check.sorted()
 }
