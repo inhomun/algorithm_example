@@ -6,16 +6,15 @@
 //
 import Foundation
 
-func solution(_ s:String) -> Bool {
-    if s.count == 4 || s.count == 6 {
-        if let a = Int(s) {
-            return true
+func solution(_ n:Int) -> String {
+    var answer = ""
+    for i in 0..<n {
+        if i % 2 == 0 {
+            answer += "수"
         }
         else {
-            return false
+            answer += "박"
         }
     }
-    else {
-    return false
-    }
+    return answer
 }
