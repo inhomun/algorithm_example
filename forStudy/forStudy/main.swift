@@ -6,15 +6,22 @@
 //
 import Foundation
 
-func solution(_ n:Int) -> String {
+func solution(_ s:String) -> String {
+    var cnt = 0
     var answer = ""
-    for i in 0..<n {
-        if i % 2 == 0 {
-            answer += "수"
-        }
-        else {
-            answer += "박"
+    for word in s {
+        if word == " " {
+            cnt = 0
+            answer += String(word)
+        } else {
+            if cnt % 2 == 0 {
+                answer += word.uppercased()
+                cnt += 1
+            } else {
+                answer += word.lowercased()
+                cnt += 1
+            }
         }
     }
     return answer
-}
+    }
