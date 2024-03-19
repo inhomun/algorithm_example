@@ -6,22 +6,17 @@
 //
 import Foundation
 
-func solution(_ s:String) -> String {
-    var cnt = 0
-    var answer = ""
-    for word in s {
-        if word == " " {
-            cnt = 0
-            answer += String(word)
-        } else {
-            if cnt % 2 == 0 {
-                answer += word.uppercased()
-                cnt += 1
-            } else {
-                answer += word.lowercased()
-                cnt += 1
-            }
-        }
-    }
+func solution(_ n:Int) -> Int
+{
+    var tmp = n
+    var answer:Int = 0
+    repeat {
+        answer += (tmp % 10)
+        tmp = tmp / 10
+    } while tmp > 0
+
+    // [실행] 버튼을 누르면 출력 값을 볼 수 있습니다.
+    print("Hello Swift")
+    
     return answer
-    }
+}
