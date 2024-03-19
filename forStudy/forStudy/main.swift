@@ -4,13 +4,14 @@
 //
 //  Created by 문인호 on 2023/01/27.
 //
-import Foundation
-func solution(_ n:Int64) -> Int64 {
-    let squearRoot = sqrt(Double(n))
-    if squearRoot == Double(Int64(squearRoot)) {
-        return Int64(pow(squearRoot+1, 2))
+func solution(_ arr:[Int]) -> [Int] {
+    var tmp = arr
+    tmp.remove(at: tmp.firstIndex(of: tmp.min()!)!)
+    if tmp.count == 0 {
+        tmp.append(-1)
+        return tmp
     }
     else {
-        return -1
+    return tmp
     }
 }
