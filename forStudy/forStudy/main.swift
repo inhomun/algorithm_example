@@ -4,23 +4,15 @@
 //
 //  Created by 문인호 on 2023/01/27.
 //
-func solution(_ num:Int) -> Int {
-    var answer = 0
-    var a = num
-    repeat {
-        if a == 1 {
-            return 0
-        }
-        else if a % 2 == 0 {
-            a /= 2
+func solution(_ phone_number:String) -> String {
+    var answer = ""
+    for (idx, i) in phone_number.enumerated() {
+        if idx < phone_number.count - 4 {
+            answer += "*"
         }
         else {
-            a = a * 3 + 1
+            answer += "\(i)"
         }
-        answer += 1
-        if answer >= 500 {
-            return -1
-        }
-    } while a != 1
+    }
     return answer
 }
