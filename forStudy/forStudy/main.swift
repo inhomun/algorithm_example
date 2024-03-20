@@ -4,19 +4,23 @@
 //
 //  Created by 문인호 on 2023/01/27.
 //
-func solution(_ n:Int, _ m:Int) -> [Int] {
-    func gcd(_ n: Int, _ m: Int) -> Int {
-        if m == 0 {
-            return n
+func solution(_ num:Int) -> Int {
+    var answer = 0
+    var a = num
+    repeat {
+        if a == 1 {
+            return 0
+        }
+        else if a % 2 == 0 {
+            a /= 2
         }
         else {
-            return gcd(m, n % m)
+            a = a * 3 + 1
         }
-    }
-    
-    func lcm (_ n: Int, _ m: Int) -> Int {
-        return n * m / gcd(n, m)
-    }
-    
-    return [gcd(n, m), lcm(n, m)]
+        answer += 1
+        if answer >= 500 {
+            return -1
+        }
+    } while a != 1
+    return answer
 }
