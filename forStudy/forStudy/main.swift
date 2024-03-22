@@ -6,13 +6,17 @@
 //
 import Foundation
 
-let n = readLine()!.components(separatedBy: [" "]).map { Int($0)! }
-let (a, b) = (n[0], n[1])
-
-for i in 1...b {
-    var tmp = ""
-    for j in 1...a {
-        tmp += "*"
+func solution(_ array:[Int], _ commands:[[Int]]) -> [Int] {
+    var answer = [Int]()
+    for j in commands {
+        var tmp = [Int]()
+        for (idx, i) in array.enumerated() {
+            if idx >= j[0]-1 && idx <= j[1]-1 {
+                tmp.append(i)
+            }
+        }
+        tmp = tmp.sorted(by: <)
+        answer.append(tmp[j[2]-1])
     }
-    print("\(tmp)")
+    return answer
 }
