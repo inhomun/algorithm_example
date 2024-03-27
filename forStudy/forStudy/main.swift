@@ -6,17 +6,31 @@
 //
 import Foundation
 
-func solution(_ array:[Int], _ commands:[[Int]]) -> [Int] {
-    var answer = [Int]()
-    for j in commands {
-        var tmp = [Int]()
-        for (idx, i) in array.enumerated() {
-            if idx >= j[0]-1 && idx <= j[1]-1 {
-                tmp.append(i)
-            }
+func solution(_ s:String, _ n:Int) -> String {
+    var answer = ""
+    for i in s {
+        if i == " " {
+            answer += " "
         }
-        tmp = tmp.sorted(by: <)
-        answer.append(tmp[j[2]-1])
+        else {
+            var a = 0
+            var b = i.asciiValue!
+            repeat {
+                if b + 1 > 122 {
+                    b = 97
+                    a += 1
+                }
+                else if b + 1 > 90 && b < 97 {
+                    b = 65
+                    a += 1
+                }
+                else {
+                b += 1
+                a += 1
+                }
+            } while n != a
+            answer += String(Character(UnicodeScalar(b)))
+        }
     }
     return answer
 }
