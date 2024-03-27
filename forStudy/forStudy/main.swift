@@ -6,18 +6,28 @@
 //
 import Foundation
 
-func solution(_ d:[Int], _ budget:Int) -> Int {
-    let a = d.sorted(by: <)
-    var b = 0
-    var answer = 0
-    for i in a {
-        if i + b > budget {
-            return answer
+func solution(_ n:Int, _ arr1:[Int], _ arr2:[Int]) -> [String] {
+    var result = [String]()
+    var answer = [String]()
+    for i in 0..<arr1.count {
+        result.append(String(arr1[i] | arr2[i],radix: 2))
+    }
+    for j in result {
+        var tmp = ""
+        if j.count < n {
+                for _ in 1...n-j.count {
+                    tmp += " "
+                }
+            }
+        for k in j {
+            if k == "1" {
+                tmp += "#"
+            }
+            else if k == "0" {
+                tmp += " "
+            }
         }
-        else {
-            b += i
-            answer += 1
-        }
+        answer.append(tmp)
     }
     return answer
 }
