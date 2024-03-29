@@ -6,34 +6,26 @@
 //
 import Foundation
 
-func solution(_ new_id:String) -> String {
-    var id = new_id.lowercased()
-    let possible = "1234567890abcdefghijklmnopqrstuvwxyz-_."
-    var newId = ""
-    for i in id {
-        if possible.contains(i) {
-            newId += "\(i)"
-        }
+func solution(_ lottos:[Int], _ win_nums:[Int]) -> [Int] {
+    var zerocnt = lottos.filter { $0 == 0 }.count
+    var cnt = win_nums.filter { lottos.contains($0) }.count
+    func returnVal(_ cnt: Int) -> Int {
+    switch cnt {
+    case 6:
+        return 1
+    case 5:
+        return 2
+    case 4:
+        return 3
+    case 3:
+        return 4
+    case 2:
+        return 5
+    case 1, 0:
+        return 6
+    default:
+        return 0
     }
-    while newId.contains("..") {
-        newId = newId.replacingOccurrences(of: "..", with: ".")
     }
-    var charArr: [Character] = []
-    charArr = Array(newId)
-    if charArr[0] == "." {
-        charArr.remove(at: 0)
-    }
-    if charArr.count == 0 {
-        charArr.append("a")
-    }
-    while charArr.count >= 16 {
-        charArr.remove(at: charArr.count-1)
-    }
-    if charArr[charArr.count-1] == "." {
-        charArr.remove(at: charArr.count-1)
-    }
-    while charArr.count <= 2 {
-        charArr.append(charArr[charArr.count-1])
-    }
-    return String(charArr)
+    return [returnVal(cnt+zerocnt), returnVal(cnt)]
 }
