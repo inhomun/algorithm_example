@@ -6,28 +6,34 @@
 //
 import Foundation
 
-func solution(_ n:Int, _ arr1:[Int], _ arr2:[Int]) -> [String] {
-    var result = [String]()
-    var answer = [String]()
-    for i in 0..<arr1.count {
-        result.append(String(arr1[i] | arr2[i],radix: 2))
-    }
-    for j in result {
-        var tmp = ""
-        if j.count < n {
-                for _ in 1...n-j.count {
-                    tmp += " "
-                }
-            }
-        for k in j {
-            if k == "1" {
-                tmp += "#"
-            }
-            else if k == "0" {
-                tmp += " "
-            }
+func solution(_ new_id:String) -> String {
+    var id = new_id.lowercased()
+    let possible = "1234567890abcdefghijklmnopqrstuvwxyz-_."
+    var newId = ""
+    for i in id {
+        if possible.contains(i) {
+            newId += "\(i)"
         }
-        answer.append(tmp)
     }
-    return answer
+    while newId.contains("..") {
+        newId = newId.replacingOccurrences(of: "..", with: ".")
+    }
+    var charArr: [Character] = []
+    charArr = Array(newId)
+    if charArr[0] == "." {
+        charArr.remove(at: 0)
+    }
+    if charArr.count == 0 {
+        charArr.append("a")
+    }
+    while charArr.count >= 16 {
+        charArr.remove(at: charArr.count-1)
+    }
+    if charArr[charArr.count-1] == "." {
+        charArr.remove(at: charArr.count-1)
+    }
+    while charArr.count <= 2 {
+        charArr.append(charArr[charArr.count-1])
+    }
+    return String(charArr)
 }
