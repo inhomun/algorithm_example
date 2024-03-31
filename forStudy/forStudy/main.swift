@@ -6,26 +6,45 @@
 //
 import Foundation
 
-func solution(_ lottos:[Int], _ win_nums:[Int]) -> [Int] {
-    var zerocnt = lottos.filter { $0 == 0 }.count
-    var cnt = win_nums.filter { lottos.contains($0) }.count
-    func returnVal(_ cnt: Int) -> Int {
-    switch cnt {
-    case 6:
-        return 1
-    case 5:
-        return 2
-    case 4:
-        return 3
-    case 3:
-        return 4
-    case 2:
-        return 5
-    case 1, 0:
-        return 6
-    default:
-        return 0
+func solution(_ dartResult:String) -> Int {
+    var numArr = [Int]()
+    var tmp = ""
+    for i in dartResult {
+        var a = String(i)
+        if a == "S" {
+            numArr.append(Int(tmp)!)
+            tmp = ""
+            continue
+        }
+        else if a == "D" {
+            numArr.append(Int(tmp)!*Int(tmp)!)
+            tmp = ""
+            continue
+        }
+        else if a == "T" {
+            numArr.append(Int(tmp)!*Int(tmp)!*Int(tmp)!)
+            tmp = ""
+            continue
+        }
+        
+        if a == "*" {
+            if numArr.count > 1 {
+            for i in numArr.endIndex-2..<numArr.endIndex {
+                numArr[i] *= 2
+            }
+            }
+            else {
+                numArr[0] *= 2
+                }
+            continue
+        }
+        
+        if a == "#" {
+            numArr[numArr.endIndex-1] *= -1
+            continue
+        }
+        tmp += a
     }
-    }
-    return [returnVal(cnt+zerocnt), returnVal(cnt)]
+    var b = numArr.reduce(0, +)
+    return b
 }
