@@ -6,18 +6,27 @@
 //
 import Foundation
 
-func solution(_ N:Int, _ stages:[Int]) -> [Int] {
-    var failure = [Int: Float]()
-    var cnt = Array(repeating: 0, count: N+2)
-    for j in stages {
-        cnt[j] += 1
+func solution(_ board:[[Int]], _ moves:[Int]) -> Int {
+    var b = board
+    var answer = 0
+    var stack = [Int]()
+    for i in moves {
+        for j in 0..<b.count {
+            if b[j][i-1] == 0 {
+                continue
+            }
+            else {
+                if b[j][i-1] == stack.last {
+                    stack.removeLast()
+                    answer += 2
+                }
+                else {
+                    stack.append(b[j][i-1])
+                }
+                b[j][i-1] = 0
+                break
+            }
+        }
     }
-    var totalcnt = stages.count
-    for i in 1...N {
-        totalcnt = totalcnt - cnt[i]
-        failure[i] = Float(cnt[i]) / Float(totalcnt)
-    }
-    let result = failure.sorted(by: <).sorted(by: { $0.1 > $1.1 }).map{ $0.key }
-    
-    return result
+    return answer
 }
