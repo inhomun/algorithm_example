@@ -6,45 +6,18 @@
 //
 import Foundation
 
-func solution(_ dartResult:String) -> Int {
-    var numArr = [Int]()
-    var tmp = ""
-    for i in dartResult {
-        var a = String(i)
-        if a == "S" {
-            numArr.append(Int(tmp)!)
-            tmp = ""
-            continue
-        }
-        else if a == "D" {
-            numArr.append(Int(tmp)!*Int(tmp)!)
-            tmp = ""
-            continue
-        }
-        else if a == "T" {
-            numArr.append(Int(tmp)!*Int(tmp)!*Int(tmp)!)
-            tmp = ""
-            continue
-        }
-        
-        if a == "*" {
-            if numArr.count > 1 {
-            for i in numArr.endIndex-2..<numArr.endIndex {
-                numArr[i] *= 2
-            }
-            }
-            else {
-                numArr[0] *= 2
-                }
-            continue
-        }
-        
-        if a == "#" {
-            numArr[numArr.endIndex-1] *= -1
-            continue
-        }
-        tmp += a
+func solution(_ N:Int, _ stages:[Int]) -> [Int] {
+    var failure = [Int: Float]()
+    var cnt = Array(repeating: 0, count: N+2)
+    for j in stages {
+        cnt[j] += 1
     }
-    var b = numArr.reduce(0, +)
-    return b
+    var totalcnt = stages.count
+    for i in 1...N {
+        totalcnt = totalcnt - cnt[i]
+        failure[i] = Float(cnt[i]) / Float(totalcnt)
+    }
+    let result = failure.sorted(by: <).sorted(by: { $0.1 > $1.1 }).map{ $0.key }
+    
+    return result
 }
