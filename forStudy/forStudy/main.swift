@@ -6,22 +6,16 @@
 //
 import Foundation
 
-func solution(_ s:String) -> [Int] {
-    var tmp = s
-    var zerocnt = 0
-    var cnt = 0
-    repeat {
-        var a = ""
-        for i in tmp {
-            if i == "0" {
-                zerocnt += 1
-            }
-            else {
-                a += String(i)
-            }
+func solution(_ n:Int) -> Int
+{
+    var b = n
+    let a = String(n, radix: 2).filter{ $0 == "1" }.count
+    while b <= 1000000 {
+        b += 1
+        let c = String(b, radix: 2).filter{ $0 == "1" }.count
+        if a == c {
+            return b
         }
-        tmp = String(a.count, radix:2)
-        cnt += 1
-    } while tmp != "1"
-    return [cnt, zerocnt]
+    }
+    return 0
 }
