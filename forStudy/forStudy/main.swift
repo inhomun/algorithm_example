@@ -6,19 +6,16 @@
 //
 import Foundation
 
-func solution(_ s:String) -> String {
-    var a = s.components(separatedBy: " ")
-    for (idx1, i) in a.enumerated() {
-        var answer = ""
-        for (idx, j) in i.enumerated() {
-            if idx == 0 {
-                answer += j.uppercased()
-            }
-            else {
-                answer += j.lowercased()
-            }
-        }
-        a[idx1] = answer
+func solution(_ A:[Int], _ B:[Int]) -> Int
+{
+    var ans = 0
+    let a = A.sorted(by: <)
+    let b = B.sorted(by: >)
+    for i in 0..<A.count {
+        ans += a[i]*b[i]
     }
-    return a.joined(separator: " ")
+    // [실행] 버튼을 누르면 출력 값을 볼 수 있습니다.
+    print("Hello Swift")
+
+    return ans
 }
