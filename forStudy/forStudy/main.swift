@@ -6,25 +6,22 @@
 //
 import Foundation
 
-func solution(_ s:String) -> Bool
-{
-    var ans:Bool = false
-    var tmp = [Int]()
-    for i in s {
-        if i == "(" {
-            tmp.append(1)
-        }
-        else {
-            if tmp.contains(1) {
-                var a = tmp.popLast()
+func solution(_ s:String) -> [Int] {
+    var tmp = s
+    var zerocnt = 0
+    var cnt = 0
+    repeat {
+        var a = ""
+        for i in tmp {
+            if i == "0" {
+                zerocnt += 1
             }
             else {
-                return false
+                a += String(i)
             }
         }
-    }
-    // [실행] 버튼을 누르면 출력 값을 볼 수 있습니다.
-    print("Hello Swift")
-
-    return tmp.isEmpty
+        tmp = String(a.count, radix:2)
+        cnt += 1
+    } while tmp != "1"
+    return [cnt, zerocnt]
 }
