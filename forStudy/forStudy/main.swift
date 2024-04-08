@@ -6,19 +6,19 @@
 //
 import Foundation
 
-func solution(_ number:String, _ k:Int) -> String {
-    var stack = [Character]()
-    var cnt = k
-    var numCount = number.count - k
-    for i in number {
-        while !stack.isEmpty && cnt > 0 && stack.last! < i {
-            var b = stack.popLast()
-            cnt -= 1
+func solution(_ numbers:[Int], _ target:Int) -> Int {
+    var answer = 0
+    func dfs(_ number: Int, _ step: Int) {
+        if step == numbers.count {
+            if number == target {
+                answer += 1
+            }
         }
-        
-        if stack.count < numCount {
-            stack.append(i)
+        else {
+            dfs(number + numbers[step], step + 1)
+            dfs(number - numbers[step], step + 1)
         }
     }
-    return String(stack)
+    dfs(0, 0)
+    return answer
 }
