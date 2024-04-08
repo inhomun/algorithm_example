@@ -6,19 +6,12 @@
 //
 import Foundation
 
-func solution(_ numbers:[Int], _ target:Int) -> Int {
-    var answer = 0
-    func dfs(_ number: Int, _ step: Int) {
-        if step == numbers.count {
-            if number == target {
-                answer += 1
-            }
-        }
-        else {
-            dfs(number + numbers[step], step + 1)
-            dfs(number - numbers[step], step + 1)
-        }
+func solution(_ n:Int, _ left:Int64, _ right:Int64) -> [Int] {
+    var answer = [Int]()
+    for i in Int(left)...Int(right) {
+        var x = i / n + 1
+        var y = i % n + 1
+        answer.append(x > y ? x : y)
     }
-    dfs(0, 0)
     return answer
 }
