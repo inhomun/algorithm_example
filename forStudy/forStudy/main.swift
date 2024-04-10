@@ -6,12 +6,22 @@
 //
 import Foundation
 
-func solution(_ n:Int, _ left:Int64, _ right:Int64) -> [Int] {
-    var answer = [Int]()
-    for i in Int(left)...Int(right) {
-        var x = i / n + 1
-        var y = i % n + 1
-        answer.append(x > y ? x : y)
+func solution(_ n:Int) -> Int {
+    var arr = [Int]()
+    for i in 0..<n {
+        if i == 0 {
+            arr.append(1)
+        }
+        else if i == 1 {
+            arr.append(1)
+        }
+        else if i == 2 {
+            arr.append(2)
+        }
+        else {
+            arr.append((arr[i-2] + arr[i-1]) % 1234567)
+        }
     }
+    var answer = arr.popLast()!
     return answer
 }
