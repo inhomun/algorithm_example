@@ -6,47 +6,25 @@
 //
 import Foundation
 
-func solution(_ s:String) -> Int {
-    var tmp = Array(s)
-    var answer = 0
-    for i in 0..<tmp.count {
-            var stack = [Character]()
-        for j in tmp {
-            if j == "[" || j == "{" || j == "(" {
-                stack.append(j)
+func solution(_ s:String) -> Int{
+    var str = s
+    while !str.isEmpty {
+        var stack = ""
+        var a = [Character]()
+        for i in str {
+            if stack.last == i {
+                stack.removeLast()
+                a.append(i)
             }
             else {
-                if j == "]" {
-                    if stack.last == "[" {
-                        var a = stack.removeLast()
-                    }
-                    else {
-                        stack.append(j)
-                    }
-                }
-                else if j == "}" {
-                    if stack.last == "{" {
-                        var a = stack.removeLast()
-                    }
-                    else {
-                        stack.append(j)
-                    }
-                }
-                else if j == ")" {
-                    if stack.last == "(" {
-                        var a = stack.removeLast()
-                    }
-                    else {
-                        stack.append(j)
-                    }
-                }
+                stack += String(i)
             }
         }
-        if stack.isEmpty {
-            answer += 1
+        
+        if a.isEmpty && !str.isEmpty {
+            return 0
         }
-        var b = tmp.removeFirst()
-        tmp.append(b)
+        str = stack
     }
-    return answer
+    return 1
 }
