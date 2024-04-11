@@ -6,20 +6,31 @@
 //
 import Foundation
 
-func solution(_ k:Int, _ tangerine:[Int]) -> Int {
-    var dict = [Int: Int]()
-    for i in tangerine {
-        dict[i, default:0] += 1
-    }
-    let sortedNumbers = dict.values.sorted(by: >)
-    var sum = 0
+func solution(_ want:[String], _ number:[Int], _ discount:[String]) -> Int {
+    var queue = discount
+    var dic = Dictionary(uniqueKeysWithValues: zip(want, number))
     var cnt = 0
-    for j in sortedNumbers {
-        sum += j
+    var answer = 0
+    while !queue.isEmpty {
+        let a = queue.removeFirst()
         cnt += 1
-        if sum >= k {
-            return cnt
+        if dic.contains { $0.key == a } {
+            dic[a]! -= 1
+        }
+        var tmp = 0
+        for i in dic {
+            if i.value == 0 {
+                tmp += 1
+            }
+            if tmp == want.count {
+                answer += 1
+            }
+        }
+        if cnt >= 10 {
+            if dic.contains { $0.key == discount[cnt - 10] } {
+            dic[discount[cnt - 10]]! += 1
+            }
         }
     }
-    return cnt
+    return answer
 }
