@@ -6,30 +6,47 @@
 //
 import Foundation
 
-func solution(_ brown:Int, _ yellow:Int) -> [Int] {
-    var Arr = [[Int]]()
-    let total = brown + yellow
-    for i in 1...total/2 {
-        if total % i == 0 && i >= 3{
-            Arr.append([i, total/i])
-        }
-    }
-    for j in Arr {
-        var b = 0
-        var y = 0
-        for k in 0..<j[0] {
-            for l in 0..<j[1] {
-                if k == 0 || k == j[0]-1 || l == 0 || l == j[1]-1 {
-                    b += 1
+func solution(_ s:String) -> Int {
+    var tmp = Array(s)
+    var answer = 0
+    for i in 0..<tmp.count {
+            var stack = [Character]()
+        for j in tmp {
+            if j == "[" || j == "{" || j == "(" {
+                stack.append(j)
+            }
+            else {
+                if j == "]" {
+                    if stack.last == "[" {
+                        var a = stack.removeLast()
+                    }
+                    else {
+                        stack.append(j)
+                    }
                 }
-                else {
-                    y += 1
+                else if j == "}" {
+                    if stack.last == "{" {
+                        var a = stack.removeLast()
+                    }
+                    else {
+                        stack.append(j)
+                    }
+                }
+                else if j == ")" {
+                    if stack.last == "(" {
+                        var a = stack.removeLast()
+                    }
+                    else {
+                        stack.append(j)
+                    }
                 }
             }
         }
-        if b == brown && y == yellow {
-            return [max(j[0],j[1]), min(j[0],j[1])]
+        if stack.isEmpty {
+            answer += 1
         }
+        var b = tmp.removeFirst()
+        tmp.append(b)
     }
-    return [1, 1]
+    return answer
 }
