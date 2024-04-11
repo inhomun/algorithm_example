@@ -6,25 +6,20 @@
 //
 import Foundation
 
-func solution(_ s:String) -> Int{
-    var str = s
-    while !str.isEmpty {
-        var stack = ""
-        var a = [Character]()
-        for i in str {
-            if stack.last == i {
-                stack.removeLast()
-                a.append(i)
-            }
-            else {
-                stack += String(i)
-            }
-        }
-        
-        if a.isEmpty && !str.isEmpty {
-            return 0
-        }
-        str = stack
+func solution(_ k:Int, _ tangerine:[Int]) -> Int {
+    var dict = [Int: Int]()
+    for i in tangerine {
+        dict[i, default:0] += 1
     }
-    return 1
+    let sortedNumbers = dict.values.sorted(by: >)
+    var sum = 0
+    var cnt = 0
+    for j in sortedNumbers {
+        sum += j
+        cnt += 1
+        if sum >= k {
+            return cnt
+        }
+    }
+    return cnt
 }
