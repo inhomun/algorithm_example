@@ -4,26 +4,22 @@
 //
 //  Created by 문인호 on 2023/01/27.
 //
-func solution(_ cacheSize:Int, _ cities:[String]) -> Int {
-    var tmp = [String]()
-    var answer = 0
-    if cacheSize == 0 {
-        return cities.count * 5
+func solution(_ n:Int, _ t:Int, _ m:Int, _ p:Int) -> String {
+    var num = 0
+    var queue = [Character]()
+    var answer = ""
+    while queue.count < t * m {
+        queue += Array(String(num, radix: n))
+        num += 1
     }
-    for i in cities {
-        var a = i.lowercased()
-        if !tmp.contains(a) {
-            if tmp.count == cacheSize {
-                tmp.removeFirst()
-            }
-            tmp.append(a)
-            answer += 5
-        }
-        else if tmp.contains(a) {
-            tmp.remove(at: tmp.firstIndex(of: a)!)
-            tmp.append(a)
-            answer += 1
+    var a = queue.enumerated().filter{index, _ in
+                                     return m == p ? (index + 1) % m == 0 : (index + 1) % m == p}.map{ _, element in
+                                                                     return element}
+    for j in a {
+        answer += String(j).uppercased
+        if answer.count == t {
+            return answer
         }
     }
-    return answer
+    return String(a).uppercased()
 }
