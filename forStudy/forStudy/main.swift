@@ -6,15 +6,28 @@
 //
 import Foundation
 
-func solution(_ numbers:[Int]) -> [Int] {
-    var number = numbers
-    var stack = [Int]()
-    var answer = Array(repeating: -1, count: numbers.count)
-    for i in 0..<number.count {
-        while !stack.isEmpty && number[stack.last!] < number[i] {
-            answer[stack.popLast()!] = number[i]
+func solution(_ skill:String, _ skill_trees:[String]) -> Int {
+    var answer = 0
+    for skills in skill_trees {
+        var tmp = Array(skill)
+        var str = ""
+        var a = skills
+        while !a.isEmpty {
+            var b = a.removeFirst()
+            if tmp.first == b {
+                tmp.removeFirst()
+                str += String(b)
+            }
+            else if !tmp.contains(b) {
+                str += String(b)
+            }
+            else {
+                break
+            }
         }
-        stack.append(i)
+        if str == skills {
+            answer += 1
+        }
     }
     return answer
 }
