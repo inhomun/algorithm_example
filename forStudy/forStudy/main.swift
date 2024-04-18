@@ -6,28 +6,15 @@
 //
 import Foundation
 
-func solution(_ skill:String, _ skill_trees:[String]) -> Int {
-    var answer = 0
-    for skills in skill_trees {
-        var tmp = Array(skill)
-        var str = ""
-        var a = skills
-        while !a.isEmpty {
-            var b = a.removeFirst()
-            if tmp.first == b {
-                tmp.removeFirst()
-                str += String(b)
-            }
-            else if !tmp.contains(b) {
-                str += String(b)
-            }
-            else {
-                break
-            }
-        }
-        if str == skills {
-            answer += 1
-        }
+func solution(_ land:[[Int]]) -> Int{
+    var land = land
+    for i in 0..<(land.count-1) {
+        land[i+1][0] += max(land[i][1], land[i][2], land[i][3])
+        land[i+1][1] += max(land[i][0], land[i][2], land[i][3])
+        land[i+1][2] += max(land[i][0], land[i][1], land[i][3])
+        land[i+1][3] += max(land[i][0], land[i][1], land[i][2])
     }
-    return answer
+ 
+    var answer = land.popLast()!
+    return answer.max()!
 }
