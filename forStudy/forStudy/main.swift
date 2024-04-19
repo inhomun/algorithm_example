@@ -6,26 +6,22 @@
 //
 import Foundation
 
-func solution(_ id_list:[String], _ report:[String], _ k:Int) -> [Int] {
-    var reports = Set(report).map { $0.split(separator: " ").map(String.init)}
-    var result = [String:Int]()
-    var did = [String:[String]]()
-    var answer = [Int]()
-    var user = [String]()
-    id_list.forEach{ did[$0] = [] }
-    for i in reports {
-        result[i[1], default: 0] += 1
-        did[i[0]]!.append(i[1])
-    }
-    
-    for b in id_list {
-        var tmp = 0
-        for c in did[b]! {
-            if result[c]! >= k {
-                tmp += 1
-            }
+func solution(_ survey:[String], _ choices:[Int]) -> String {
+    var score = [Character: Int]()
+    var answer = ""
+    for i in 0..<survey.count {
+        let a = Array(survey[i])
+        if choices[i] > 4 {
+            score[a[1], default:0] += choices[i] - 4
         }
-        answer.append(tmp)
+        else {
+            score[a[0], default:0] += abs(choices[i] - 4)
+        }
     }
+    score["R", default:0] >= score["T", default:0] ? answer.append("R") : answer.append("T")
+    score["C", default:0] >= score["F", default:0] ? answer.append("C") : answer.append("F")
+    score["J", default:0] >= score["M", default:0] ? answer.append("J") : answer.append("M")
+    score["A", default:0] >= score["N", default:0] ? answer.append("A") : answer.append("N")
+
     return answer
 }
