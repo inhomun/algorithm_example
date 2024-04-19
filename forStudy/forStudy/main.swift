@@ -6,21 +6,26 @@
 //
 import Foundation
 
-func solution(_ topping:[Int]) -> Int {
-    var set2 = Set(topping)
-    var arr = Array(repeating:0, count: topping.max()! + 1)
-    var set1 = Set<Int>()
-    var answer = 0
-    for i in topping {
-        arr[i] += 1
+func solution(_ id_list:[String], _ report:[String], _ k:Int) -> [Int] {
+    var reports = Set(report).map { $0.split(separator: " ").map(String.init)}
+    var result = [String:Int]()
+    var did = [String:[String]]()
+    var answer = [Int]()
+    var user = [String]()
+    id_list.forEach{ did[$0] = [] }
+    for i in reports {
+        result[i[1], default: 0] += 1
+        did[i[0]]!.append(i[1])
     }
-    for j in topping {
-        arr[j] -= 1
-        set1.insert(j)
-        if arr[j] <= 0 {
-            set2.remove(j)
+    
+    for b in id_list {
+        var tmp = 0
+        for c in did[b]! {
+            if result[c]! >= k {
+                tmp += 1
+            }
         }
-        if set1.count == set2.count { answer += 1}
+        answer.append(tmp)
     }
     return answer
 }
