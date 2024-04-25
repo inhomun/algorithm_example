@@ -6,22 +6,24 @@
 //
 import Foundation
 
-func solution(_ order:[Int]) -> Int {
-    var index = 0
-    var tmp = 1
-    var arr = [Int]()
-    while tmp < order.count + 1 || index < order.count{
-        if arr.last == order[index] {
-            index += 1
-            arr.popLast()
+func solution(_ x:Int, _ y:Int, _ n:Int) -> Int {
+    var answer = Array(repeating: Int.max, count: y+1)
+    answer[x] = 0
+    for i in x...y where answer[i] != Int.max {
+        if i+n <= y {
+        answer[i+n] = min(answer[i] + 1, answer[i+n])
         }
-        else if tmp <= order.count {
-            arr.append(tmp)
-            tmp += 1
+        if i*2 <= y {
+        answer[i*2] = min(answer[i] + 1, answer[i*2])
         }
-        else if tmp > order.count {
-            break
+        if i*3 <= y {
+            answer[i*3] = min(answer[i] + 1, answer[i*3])
         }
     }
-    return index
+    if answer[y] == Int.max {
+        return -1
+    }
+    else {
+        return answer[y]
+    }
 }
