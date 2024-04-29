@@ -6,26 +6,28 @@
 //
 import Foundation
 
-func solution(_ bridge_length:Int, _ weight:Int, _ truck_weights:[Int]) -> Int {
-    var wait = truck_weights
-    var bridge = Array(repeating:0, count: bridge_length)
-    var time = 0
-    var sum = 0
-    while !bridge.isEmpty {
-        sum -= bridge.removeFirst()
-        time += 1
+func solution(_ N:Int, _ road:[[Int]], _ k:Int) -> Int {
+    var graph = Array(repeating: [(Int,Int)](), count: N + 1)
+    for i in road {
+        graph[i[0]].append((i[1],i[2]))
+        graph[i[1]].append((i[0],i[2]))
+    }
+    var distance = Array(repeating: Int.max, count: N + 1)
+    var queue = [(node: 1, dist:0)]
+    distance[1] = 0
+    while !queue.isEmpty {
+        let (node, dist) = queue.removeFirst()
         
-        if !wait.isEmpty {
-            if sum + wait.first! <= weight {
-                let truck = wait.removeFirst()
-                bridge.append(truck)
-                sum += truck
-            }
-            else {
-                bridge.append(0)
+        if distance[node] < dist {
+            continue
+        }
+        for (nextNode, nextDist) in graph[node] {
+            if dist + nextDist < distance[nextNode] {
+                distance[nextNode] = dist + nextDist
+                queue.append((nextNode, dist + nextDist))
             }
         }
-
     }
-    return time
+    
+    return distance.filter{ $0 <= k }.count
 }
