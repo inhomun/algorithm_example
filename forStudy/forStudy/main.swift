@@ -6,18 +6,36 @@
 //
 import Foundation
 
-func solution(_ clothes:[[String]]) -> Int {
-    var list = [String:[String]]()
-    var answer = 1
-    var lists = [Int]()
-    for i in clothes {
-        list[i[1], default: []].append(i[0])
+func solution(_ dirs:String) -> Int {
+    var x = 0
+    var y = 0
+    var way = [[Int]]()
+    for i in dirs {
+        if i == "L" {
+            if x > -5 {
+                way.append([x, y,x-1,y])
+                x -= 1
+            }
+        }
+        else if i == "R" {
+            if x < 5 {
+                way.append([x+1, y,x,y])
+                x += 1
+            }
+        }
+        else if i == "U" {
+            if y < 5 {
+                way.append([x, y, x, y+1])
+                y += 1
+            }
+        }
+        else if i == "D" {
+            if y > -5 {
+                way.append([x, y-1, x, y])
+                y -= 1
+            }
+        }
     }
-    for i in list {
-        lists.append(i.value.count)
-    }
-    for (idx, i) in lists.enumerated() {
-        answer *= (i+1)
-    }
-    return answer - 1
+    let answer = Set(way)
+    return answer.count
 }
