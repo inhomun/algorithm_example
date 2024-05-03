@@ -6,36 +6,18 @@
 //
 import Foundation
 
-func solution(_ dirs:String) -> Int {
-    var x = 0
-    var y = 0
-    var way = [[Int]]()
-    for i in dirs {
-        if i == "L" {
-            if x > -5 {
-                way.append([x, y,x-1,y])
-                x -= 1
-            }
+func solution(_ n:Int) -> [[Int]] {
+    var answer = [[Int]]()
+    func hanoi (_ count: Int,_ start: Int,_ end: Int) {
+        if count == 1 {
+            answer.append([start, end])
+            return
         }
-        else if i == "R" {
-            if x < 5 {
-                way.append([x+1, y,x,y])
-                x += 1
-            }
-        }
-        else if i == "U" {
-            if y < 5 {
-                way.append([x, y, x, y+1])
-                y += 1
-            }
-        }
-        else if i == "D" {
-            if y > -5 {
-                way.append([x, y-1, x, y])
-                y -= 1
-            }
-        }
+
+            hanoi(count-1, start, 6 - start - end)
+            hanoi(1, start, end)
+            hanoi(count-1, 6 - start - end , end)
     }
-    let answer = Set(way)
-    return answer.count
+    hanoi(n, 1, 3)
+    return answer
 }
