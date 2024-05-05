@@ -6,18 +6,29 @@
 //
 import Foundation
 
-func solution(_ n:Int) -> [[Int]] {
+func solution(_ cards:[Int]) -> Int {
+    var visited = Array(repeating: false, count: cards.count + 1)
     var answer = [[Int]]()
-    func hanoi (_ count: Int,_ start: Int,_ end: Int) {
-        if count == 1 {
-            answer.append([start, end])
-            return
+    for i in 0..<cards.count {
+        var tmp = i
+        var cnt = [Int]()
+        while !visited[tmp] {
+            visited[tmp] = true
+            cnt.append(tmp)
+            tmp = cards[tmp] - 1
         }
-
-            hanoi(count-1, start, 6 - start - end)
-            hanoi(1, start, end)
-            hanoi(count-1, 6 - start - end , end)
+        if cnt.isEmpty {
+            continue
+        }
+        else {
+            answer.append(cnt)
+        }
     }
-    hanoi(n, 1, 3)
-    return answer
+    answer.sort { $0.count > $1.count }
+    if answer.count == 1 {
+        return 0
+    }
+    else {
+        return answer[0].count * answer[1].count
+    }
 }
