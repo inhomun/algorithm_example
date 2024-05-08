@@ -6,29 +6,52 @@
 //
 import Foundation
 
-func solution(_ cards:[Int]) -> Int {
-    var visited = Array(repeating: false, count: cards.count + 1)
-    var answer = [[Int]]()
-    for i in 0..<cards.count {
-        var tmp = i
-        var cnt = [Int]()
-        while !visited[tmp] {
-            visited[tmp] = true
-            cnt.append(tmp)
-            tmp = cards[tmp] - 1
+func solution(_ numbers:String) -> Int {
+    var temp = Array(numbers).map { String($0) }
+    var answer = [String]()
+    var val = 0
+    func permutation(_ a: [String],_ k: Int) {
+        var result = [String]()
+        var visited = [Bool](repeating: false, count: a.count)
+    
+    func permut(_ now: String) {
+        if now.count == k {
+            result.append(now)
+            return
         }
-        if cnt.isEmpty {
-            continue
+    
+        for i in 0..<a.count where !visited[i] {
+            visited[i] = true
+            permut(now + String(a[i]))
+            visited[i] = false
+        }
+    }
+        permut("")
+        answer += result
+        return
+    }
+        
+        
+    func isPrimeNumber(_ n: Int) -> Bool {
+    if n < 2 {
+        return false
+    }
+    for i in 2..<n {
+        if n % i == 0 { return false }
+    }
+    return true
+}
+    for i in 1...numbers.count {
+        permutation(temp, i)
+    }
+    var tmp = Set(answer.compactMap { Int($0)! })
+    for i in tmp {
+        if isPrimeNumber(i) {
+            val += 1
         }
         else {
-            answer.append(cnt)
+            continue
         }
     }
-    answer.sort { $0.count > $1.count }
-    if answer.count == 1 {
-        return 0
-    }
-    else {
-        return answer[0].count * answer[1].count
-    }
+    return val
 }
