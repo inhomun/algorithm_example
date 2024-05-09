@@ -6,24 +6,46 @@
 //
 import Foundation
 
-func solution(_ k:Int, _ dungeons:[[Int]]) -> Int {
-    var visited = Array(repeating: false, count: dungeons.count)
-    var answer = [Int]()
-    func dfs (_ step: Int,_ k: Int) {
-        if step == dungeons.count || k == 0{
-            answer.append(step)
+func solution(_ n:Int, _ k:Int) -> Int {
+    var answer = 0
+    func isPrime(_ checkNumber: Int) {
+        if checkNumber < 2 {
             return
         }
-        for (idx,i) in dungeons.enumerated() where !visited[idx] {
-            if k >= i[0] {
-                visited[idx] = true
-                dfs(step + 1, k - i[1])
-                visited[idx] = false
+        else if checkNumber == 2 || checkNumber == 3 || checkNumber == 5 || checkNumber == 7 {
+            answer += 1
+            return
+        }
+        else if checkNumber < 10 {
+            return
+        }
+    let criterion = Int(Double(checkNumber).squareRoot())
+    for i in 2...criterion {
+        if checkNumber % i == 0 {
+            return
+        }
+    }
+    answer += 1
+    return
+}
+    var target = String(n, radix: k)
+    var tmp = ""
+    for i in target {
+        if i == "0" {
+            if tmp != "" {
+                isPrime(Int(tmp)!)
+                tmp = ""
+            }
+            else {
+                tmp = ""
             }
         }
-        answer.append(step)
-        return
+        else {
+            tmp += String(i)
+        }
     }
-    dfs(0, k)
-    return answer.max()!
+    if tmp != "" {
+        isPrime(Int(tmp)!)
+    }
+    return answer
 }
