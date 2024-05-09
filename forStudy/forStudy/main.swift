@@ -6,45 +6,23 @@
 //
 import Foundation
 
-func solution(_ s:String) -> [Int] {
-    var answer = [[Int]]()
-    var a = s
-    a.removeFirst()
-    let b = a.popLast()!
-    var tmp = [String]()
-    var str = ""
-    for i in a {
-        if i == "{" {
-            tmp = [String]()
-            str = ""
-        }
-        else if i.isNumber {
-            str += String(i)
-        }
-        else if i == "}" {
-            tmp.append(str)
-            let arr = tmp.map { Int($0)! }
-            answer.append(arr)
-        }
-        else if i == "," {
-            tmp.append(str)
-            str = ""
+func solution(_ priorities:[Int], _ location:Int) -> Int {
+    var arr = [(index: Int, val: Int)]()
+    for (idx,i) in priorities.enumerated() {
+        arr.append((index: idx, val: i))
+    }
+    var cnt = 0
+    while !arr.isEmpty {
+        let (index, val) = arr.removeFirst()
+        if arr.contains(where: { $0.val > val }) {
+            arr.append((index, val))
         }
         else {
-            continue
-        }
-    }
-    answer.sort { $0.count < $1.count }
-    var temp = [Int]()
-    for i in answer {
-        for j in i {
-            if temp.contains(j) {
-                continue
-            }
-            else {
-                temp.append(j)
+            cnt += 1
+            if index == location {
+                return cnt
             }
         }
     }
-    return temp
+    return cnt
 }
