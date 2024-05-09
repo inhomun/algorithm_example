@@ -6,52 +6,45 @@
 //
 import Foundation
 
-func solution(_ numbers:String) -> Int {
-    var temp = Array(numbers).map { String($0) }
-    var answer = [String]()
-    var val = 0
-    func permutation(_ a: [String],_ k: Int) {
-        var result = [String]()
-        var visited = [Bool](repeating: false, count: a.count)
-    
-    func permut(_ now: String) {
-        if now.count == k {
-            result.append(now)
-            return
+func solution(_ s:String) -> [Int] {
+    var answer = [[Int]]()
+    var a = s
+    a.removeFirst()
+    let b = a.popLast()!
+    var tmp = [String]()
+    var str = ""
+    for i in a {
+        if i == "{" {
+            tmp = [String]()
+            str = ""
         }
-    
-        for i in 0..<a.count where !visited[i] {
-            visited[i] = true
-            permut(now + String(a[i]))
-            visited[i] = false
+        else if i.isNumber {
+            str += String(i)
         }
-    }
-        permut("")
-        answer += result
-        return
-    }
-        
-        
-    func isPrimeNumber(_ n: Int) -> Bool {
-    if n < 2 {
-        return false
-    }
-    for i in 2..<n {
-        if n % i == 0 { return false }
-    }
-    return true
-}
-    for i in 1...numbers.count {
-        permutation(temp, i)
-    }
-    var tmp = Set(answer.compactMap { Int($0)! })
-    for i in tmp {
-        if isPrimeNumber(i) {
-            val += 1
+        else if i == "}" {
+            tmp.append(str)
+            let arr = tmp.map { Int($0)! }
+            answer.append(arr)
+        }
+        else if i == "," {
+            tmp.append(str)
+            str = ""
         }
         else {
             continue
         }
     }
-    return val
+    answer.sort { $0.count < $1.count }
+    var temp = [Int]()
+    for i in answer {
+        for j in i {
+            if temp.contains(j) {
+                continue
+            }
+            else {
+                temp.append(j)
+            }
+        }
+    }
+    return temp
 }
