@@ -6,23 +6,24 @@
 //
 import Foundation
 
-func solution(_ priorities:[Int], _ location:Int) -> Int {
-    var arr = [(index: Int, val: Int)]()
-    for (idx,i) in priorities.enumerated() {
-        arr.append((index: idx, val: i))
-    }
-    var cnt = 0
-    while !arr.isEmpty {
-        let (index, val) = arr.removeFirst()
-        if arr.contains(where: { $0.val > val }) {
-            arr.append((index, val))
+func solution(_ k:Int, _ dungeons:[[Int]]) -> Int {
+    var visited = Array(repeating: false, count: dungeons.count)
+    var answer = [Int]()
+    func dfs (_ step: Int,_ k: Int) {
+        if step == dungeons.count || k == 0{
+            answer.append(step)
+            return
         }
-        else {
-            cnt += 1
-            if index == location {
-                return cnt
+        for (idx,i) in dungeons.enumerated() where !visited[idx] {
+            if k >= i[0] {
+                visited[idx] = true
+                dfs(step + 1, k - i[1])
+                visited[idx] = false
             }
         }
+        answer.append(step)
+        return
     }
-    return cnt
+    dfs(0, k)
+    return answer.max()!
 }
