@@ -6,46 +6,17 @@
 //
 import Foundation
 
-func solution(_ n:Int, _ k:Int) -> Int {
+func solution(_ weights:[Int]) -> Int64 {
+    let ratio = [[1,1],[2,4],[4,2],[2,3],[3,2],[3,4],[4,3]]
+    var count = [Int:Int]()
     var answer = 0
-    func isPrime(_ checkNumber: Int) {
-        if checkNumber < 2 {
-            return
-        }
-        else if checkNumber == 2 || checkNumber == 3 || checkNumber == 5 || checkNumber == 7 {
-            answer += 1
-            return
-        }
-        else if checkNumber < 10 {
-            return
-        }
-    let criterion = Int(Double(checkNumber).squareRoot())
-    for i in 2...criterion {
-        if checkNumber % i == 0 {
-            return
-        }
-    }
-    answer += 1
-    return
-}
-    var target = String(n, radix: k)
-    var tmp = ""
-    for i in target {
-        if i == "0" {
-            if tmp != "" {
-                isPrime(Int(tmp)!)
-                tmp = ""
-            }
-            else {
-                tmp = ""
+    for i in weights {
+        for j in ratio {
+            if i * j[0] % j[1] == 0 {
+                answer += count[i * j[0] / j[1], default:0 ]
             }
         }
-        else {
-            tmp += String(i)
-        }
+        count[i, default:0] += 1
     }
-    if tmp != "" {
-        isPrime(Int(tmp)!)
-    }
-    return answer
+    return Int64(answer)
 }
