@@ -6,45 +6,31 @@
 //
 import Foundation
 
-func solution(_ maps:[String]) -> [Int] {
-    var map = [[Character]]()
-    for i in maps{
-        map.append(Array(i))
+func solution(_ X:String, _ Y:String) -> String {
+    var cntA = Array(repeating: 0, count: 10)
+    var cntB = Array(repeating: 0, count: 10)
+    for i in X {
+        cntA[Int(String(i))!] += 1
     }
-    
-    let maxX = maps[0].count
-    let maxY = maps.count
-    var visited = Array(repeating: Array(repeating: false, count: maxX), count: maxY)
-    func dfs(_ x: Int,_ y: Int) -> Int  {
-        if x < 0 || y < 0 || x >= maxX || y >= maxY {
-            return 0
-        }
-        
-        if visited[y][x] == true {
-            return 0
-        }
-        
-        if map[y][x] == "X"{
-            visited[y][x] = true
-            return 0
-        }
-        
-        visited[y][x] = true
-        var tmp = Int(String(map[y][x]))!
-        // 상 하 좌 우로만 움직여야 하기 때문에
-        return tmp + dfs(x, y + 1) + dfs(x, y - 1) + dfs(x + 1, y) + dfs(x - 1, y)
+    for j in Y {
+        cntB[Int(String(j))!] += 1
     }
-   var result = [Int]()
-    
-    for i in 0..<maxY{
-        for j in 0..<maxX{
-            var a = dfs(j, i)
-            if a > 0 {
-                result.append(a)
+    var answer = ""
+    for k in stride(from: 9, through: 0, by: -1)  {
+        let minVal = min(cntA[k], cntB[k])
+        if minVal > 0 {
+            for _ in 0..<minVal {
+               answer += String(k)
             }
         }
     }
-    
-    
-    return result.isEmpty ? [-1] : result.sorted(by: <)
+    if answer == "" {
+        return "-1"
+    }
+    else if answer.first == "0" {
+        return "0"
+    }
+    else {
+        return answer
+    }
 }
