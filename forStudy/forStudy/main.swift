@@ -6,47 +6,34 @@
 //
 import Foundation
 
-func solution(_ numbers:[Int], _ hand:String) -> String {
-    var answer = ""
-    let pos = [1: [0, 0], 2: [0, 1], 3: [0, 2],
-               4: [1, 0], 5: [1, 1], 6: [1, 2],
-               7: [2, 0], 8: [2, 1], 9: [2, 2],
-               0: [3, 1]]
-    var lPos = [3, 0], rPos = [3, 2]
-    func getDistance(_ PosA: [Int],_ PosB: [Int]) -> Int {
-        return abs(PosA[0] - PosB[0]) + abs(PosA[1] - PosB[1])
-    }
-    for i in numbers {
-        if i == 1 || i == 4 || i == 7 {
-            answer += "L"
-            lPos = pos[i]!
-        }
-        else if i == 3 || i == 6 || i == 9 {
-            answer += "R"
-            rPos = pos[i]!
-        }
-        else {
-            let lDist = getDistance(lPos, pos[i]!)
-            let rDist = getDistance(rPos, pos[i]!)
-            if lDist < rDist {
-                answer += "L"
-                lPos = pos[i]!
-            }
-            else if rDist < lDist {
-                answer += "R"
-                rPos = pos[i]!
-            }
-            else {
-                if hand == "right" {
-                    answer += "R"
-                    rPos = pos[i]!
-                }
-                else {
-                    answer += "L"
-                    lPos = pos[i]!
-                }
+func solution(_ park:[String], _ routes:[String]) -> [Int] {
+    let dir = ["E":[1,0], "W":[-1,0],"N":[0,-1],"S":[0,1]]
+    var map = park.map { Array($0) }
+    var start = [Int]()
+    for (x,i) in map.enumerated() {
+        for (y,j) in i.enumerated() {
+            if j == "S" {
+                start = [x,y]
             }
         }
     }
-    return answer
+    for i in routes {
+        let arr = i.split(separator: " ")
+        let move = dir[String(arr[0])]!
+        var tmp = start
+        for j in 0..<Int(arr[1])! {
+            tmp[0] += move[1]
+            tmp[1] += move[0]
+            if tmp[1] < 0 || tmp[0] < 0 || tmp[1] >= map[0].count || tmp[0] >= map.count {
+                break
+            }
+            if map[tmp[0]][tmp[1]] == "X" {
+                break
+            }
+            if j == Int(arr[1])!-1  {
+                start = tmp
+            }
+        }
+    }
+    return start
 }
