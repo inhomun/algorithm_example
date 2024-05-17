@@ -4,36 +4,40 @@
 //
 //  Created by 문인호 on 2023/01/27.
 //
-import Foundation
-
-func solution(_ park:[String], _ routes:[String]) -> [Int] {
-    let dir = ["E":[1,0], "W":[-1,0],"N":[0,-1],"S":[0,1]]
-    var map = park.map { Array($0) }
-    var start = [Int]()
-    for (x,i) in map.enumerated() {
-        for (y,j) in i.enumerated() {
-            if j == "S" {
-                start = [x,y]
+func solution(_ str1:String, _ str2:String) -> Int {
+    var tmp1 = ""
+    var tmp2 = ""
+    var arr1 = [String:Int]()
+    var arr2 = [String:Int]()
+    var arr = [String]()
+    for (x,i) in str1.enumerated() {
+        tmp1 += String(i.uppercased())
+        if tmp1.count == 2 {
+            if tmp1.first!.isLetter && tmp1.last!.isLetter {
+                arr1[tmp1, default:0] += 1
+                arr.append(tmp1)
             }
+            tmp1.removeFirst()
         }
     }
-    for i in routes {
-        let arr = i.split(separator: " ")
-        let move = dir[String(arr[0])]!
-        var tmp = start
-        for j in 0..<Int(arr[1])! {
-            tmp[0] += move[1]
-            tmp[1] += move[0]
-            if tmp[1] < 0 || tmp[0] < 0 || tmp[1] >= map[0].count || tmp[0] >= map.count {
-                break
+    for (y,i) in str2.enumerated() {
+        tmp2 += String(i.uppercased())
+        if tmp2.count == 2 {
+            if tmp2.first!.isLetter && tmp2.last!.isLetter {
+                arr2[tmp2, default:0] += 1
+                arr.append(tmp2)
             }
-            if map[tmp[0]][tmp[1]] == "X" {
-                break
-            }
-            if j == Int(arr[1])!-1  {
-                start = tmp
-            }
+            tmp2.removeFirst()
         }
     }
-    return start
+    var inter = 0
+    var union = 0
+    if arr.isEmpty {
+        return 65536
+    }
+    for i in Array(Set(arr)) {
+        union += max(arr1[i, default: 0], arr2[i, default: 0])
+        inter += min(arr1[i, default: 0], arr2[i, default: 0])
+    }
+    return Int(Double(inter) / Double(union) * 65536)
 }
