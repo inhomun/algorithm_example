@@ -4,24 +4,55 @@
 //
 //  Created by 문인호 on 2023/01/27.
 //
-func solution(_ msg:String) -> [Int] {
-    var arr = Array(msg)
-    var tmp = String(arr.removeFirst())
-    var num = 0
-    var value = 27
-    var answer = [Int]()
-    var dict : [String:Int] = ["A":1,"B":2,"C":3,"D":4,"E":5,"F":6,"G":7,"H":8,"I":9,"J":10,"K":11,"L":12,"M":13,"N":14,"O":15,"P":16,"Q":17,"R":18,"S":19,"T":20,"U":21,"V":22,"W":23,"X":24,"Y":25,"Z":26]
-    while !arr.isEmpty {
-        let a = arr.removeFirst()
-        guard let nums = dict[tmp+String(a)] else {
-            dict[tmp+String(a)] = value
-            value += 1
-            answer.append(dict[tmp]!)
-            tmp = String(a)
-            continue
-        }
-        tmp += String(a)
+import Foundation
+
+func solution(_ n:Int) -> [[Int]] {
+    var answer = Array(repeating: Array(repeating: -1, count: n), count: n)
+    var x = 0
+    var y = 0
+    var dir = 0
+    if n == 1 {
+        return [[1]]
     }
-    answer.append(dict[tmp]!)
+    for a in 1...n*n {
+        answer[x][y] = a
+        
+        if dir == 0 {
+            if y+1 == n || answer[x][y+1] != -1 {
+                dir += 1
+                x += 1
+            }
+            else {
+                y += 1
+            }
+        }
+        else if dir == 1 {
+            if x+1 == n || answer[x+1][y] != -1 {
+                dir += 1
+                y -= 1
+            }
+            else {
+                x += 1
+            }
+        }
+        else if dir == 2 {
+            if y-1 < 0 || answer[x][y-1] != -1 {
+                dir += 1
+                x -= 1
+            }
+            else {
+                y -= 1
+            }
+        }
+        else if dir == 3 {
+            if x-1 < 0 || answer[x-1][y] != -1 {
+                dir = 0
+                y += 1
+            }
+            else {
+                x -= 1
+            }
+        }
+    }
     return answer
 }
