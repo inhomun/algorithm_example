@@ -6,31 +6,25 @@
 //
 import Foundation
 
-func solution(_ board:[[Int]]) -> Int
-{
-    if board.count == 1 || board[0].count == 1 {
-        for i in board {
-            if i.contains(1) {
-                return 1
-            }
+func solution(_ data:[[Int]], _ col:Int, _ row_begin:Int, _ row_end:Int) -> Int {
+    var sortedData = data.sorted{ if $0[col-1] == $1[col-1] {
+                                    return $0[0] > $1[0]
+                                }
+                                else {
+                                    return $0[col-1] < $1[col-1]
+                                }
+                                }
+    var arr = [Int]()
+    for i in row_begin-1..<row_end {
+        var answer = 0
+        for j in 0..<sortedData[i].count {
+            answer += (sortedData[i][j] % (i + 1))
         }
-        return 0
+        arr.append(answer)
     }
-    var tmp = board
-    for i in 1..<tmp.count {
-        for j in 1..<tmp[0].count {
-            if tmp[i][j] == 1 {
-                tmp[i][j] += min(tmp[i-1][j],tmp[i][j-1],tmp[i-1][j-1])
-            }
-        }
+    var a = arr[0]
+    for i in 1..<arr.count {
+        a = a ^ arr[i]
     }
-    var answer = 0
-    for i in tmp {
-        answer = max(i.max()!, answer)
-    }
-    
-    // [실행] 버튼을 누르면 출력 값을 볼 수 있습니다.
-    print("Hello Swift")
-
-    return answer*answer
+    return a
 }
