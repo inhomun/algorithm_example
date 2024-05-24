@@ -6,53 +6,16 @@
 //
 import Foundation
 
-func solution(_ n:Int) -> [[Int]] {
-    var answer = Array(repeating: Array(repeating: -1, count: n), count: n)
-    var x = 0
-    var y = 0
-    var dir = 0
-    if n == 1 {
-        return [[1]]
+func solution(_ dots:[[Int]]) -> Int {
+    func check(_ dot1: [Int],_ dot2: [Int],_ dot3: [Int],_ dot4: [Int]) -> Int {
+        if Double(abs(dot1[1] - dot2[1])) / Double(abs(dot1[0] - dot2[0])) == Double(abs(dot3[1] - dot4[1])) / Double(abs(dot3[0] - dot4[0])) {
+            return 1
+        }
+        return 0
     }
-    for a in 1...n*n {
-        answer[x][y] = a
-        
-        if dir == 0 {
-            if y+1 == n || answer[x][y+1] != -1 {
-                dir += 1
-                x += 1
-            }
-            else {
-                y += 1
-            }
-        }
-        else if dir == 1 {
-            if x+1 == n || answer[x+1][y] != -1 {
-                dir += 1
-                y -= 1
-            }
-            else {
-                x += 1
-            }
-        }
-        else if dir == 2 {
-            if y-1 < 0 || answer[x][y-1] != -1 {
-                dir += 1
-                x -= 1
-            }
-            else {
-                y -= 1
-            }
-        }
-        else if dir == 3 {
-            if x-1 < 0 || answer[x-1][y] != -1 {
-                dir = 0
-                y += 1
-            }
-            else {
-                x -= 1
-            }
-        }
-    }
-    return answer
+    var answer = [Int]()
+    answer.append(check(dots[0],dots[1],dots[2],dots[3]))
+    answer.append(check(dots[0],dots[2],dots[1],dots[3]))
+    answer.append(check(dots[0],dots[3],dots[2],dots[1]))
+    return answer.max()!
 }
