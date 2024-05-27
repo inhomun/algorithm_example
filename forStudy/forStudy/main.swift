@@ -6,39 +6,37 @@
 //
 import Foundation
 
-func solution(_ queue1:[Int], _ queue2:[Int]) -> Int {
-    var idx1 = 0
-    var idx2 = 0
-    var q1 = queue1
-    var q2 = queue2
-    var val1 = queue1.reduce(0, +)
-    var val2 = queue2.reduce(0, +)
-    while val1 != val2 {
-        if val1 > val2 {
-            if idx1 >= q1.count || idx1 >= queue1.count * 2 {
-                break
-            }
-            let val = q1[idx1]
-            val1 -= val
-            val2 += val
-            q2.append(val)
-            idx1 += 1
+func solution(_ sequence:[Int], _ k:Int) -> [Int] {
+    var start = -1
+    var end = -1
+    var val = 0
+    var answer = [[Int]]()
+    while end < sequence.count-1 {
+        end += 1
+        val += sequence[end]
+        if val == k {
+            answer.append([start + 1, end])
         }
-        else if val1 < val2 {
-            if idx2 >= q2.count || idx2 >= queue2.count * 2 {
-                break
+        if val > k {
+            while val > k && start < end {
+                start += 1
+                val -= sequence[start]
             }
-            let val = q2[idx2]
-            val2 -= val
-            val1 += val
-            q1.append(val)
-            idx2 += 1
+            if val == k {
+                answer.append([start + 1, end])
+            }
         }
     }
-    if val1 == val2 {
-        return idx1 + idx2
+    if val == k {
+        answer.append([start, end])
     }
-    else {
-        return -1
-    }
+    
+    answer = answer.sorted {
+        if ($0[1] - $0[0]) == ($1[1] - $1[0]) {
+            return $0[0] < $1[0]
+        }
+        else {
+            return ($0[1] - $0[0]) < ($1[1] - $1[0])
+        }}
+    return answer[0]
 }
