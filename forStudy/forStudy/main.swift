@@ -6,25 +6,39 @@
 //
 import Foundation
 
-func solution(_ data:[[Int]], _ col:Int, _ row_begin:Int, _ row_end:Int) -> Int {
-    var sortedData = data.sorted{ if $0[col-1] == $1[col-1] {
-                                    return $0[0] > $1[0]
-                                }
-                                else {
-                                    return $0[col-1] < $1[col-1]
-                                }
-                                }
-    var arr = [Int]()
-    for i in row_begin-1..<row_end {
-        var answer = 0
-        for j in 0..<sortedData[i].count {
-            answer += (sortedData[i][j] % (i + 1))
+func solution(_ queue1:[Int], _ queue2:[Int]) -> Int {
+    var idx1 = 0
+    var idx2 = 0
+    var q1 = queue1
+    var q2 = queue2
+    var val1 = queue1.reduce(0, +)
+    var val2 = queue2.reduce(0, +)
+    while val1 != val2 {
+        if val1 > val2 {
+            if idx1 >= q1.count || idx1 >= queue1.count * 2 {
+                break
+            }
+            let val = q1[idx1]
+            val1 -= val
+            val2 += val
+            q2.append(val)
+            idx1 += 1
         }
-        arr.append(answer)
+        else if val1 < val2 {
+            if idx2 >= q2.count || idx2 >= queue2.count * 2 {
+                break
+            }
+            let val = q2[idx2]
+            val2 -= val
+            val1 += val
+            q1.append(val)
+            idx2 += 1
+        }
     }
-    var a = arr[0]
-    for i in 1..<arr.count {
-        a = a ^ arr[i]
+    if val1 == val2 {
+        return idx1 + idx2
     }
-    return a
+    else {
+        return -1
+    }
 }
