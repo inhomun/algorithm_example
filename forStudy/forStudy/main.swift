@@ -6,45 +6,25 @@
 //
 import Foundation
 
-func solution(_ n:Int, _ costs:[[Int]]) -> Int {
-    let sortedcosts = costs.sorted(by: {$0[2] < $1[2] })
-    var parent : [Int] = (0...n-1).map{ $0 }
-    func unionSet(start: Int, end: Int) {
-        var start = start
-        var end = end
-        
-        start = findSet(start)
-        end = findSet(end)
-        if start != end {
-            parent[end] = start
-        }
+func solution(_ n:Int, _ edge:[[Int]]) -> Int {
+    var graph = [Int:[Int]]()
+    for i in edge {
+        graph[i[0], default: []].append(i[1])
+        graph[i[1], default: []].append(i[0])
     }
-    func findSet(_ s: Int) -> Int {
-        if parent[s] == s {
-            return s
-        }
-        else {
-            let parents = findSet(parent[s])
-            parent[s] = parents
-            for i in 0..<parent.count {
-                if parent[i] == s {
-                    parent[i] = parents
-                }
-            }
-            return parents
-        }
-    }
-    var result = 0
-    for cost in sortedcosts {
-        let start = findSet(cost[0])
-        let end = findSet(cost[1])
-        let value = cost[2]
-        
-        if start != end {
-            result += value
-            unionSet(start: start, end: end)
-        }
-    }
+    var distance = Array(repeating: -1, count: n)
+    var queue = [(Int, Int)]()
+    queue.append((1, 0))
     
-    return result
+    while !queue.isEmpty {
+        let (node, length) = queue.removeFirst()
+        if distance[node-1] == -1 {
+            distance[node-1] = length
+            for i in graph[node]! {
+                    queue.append((i, length + 1))
+            }
+        }
+    }
+    let maxVal = distance.max()!
+    return distance.filter{ $0 == maxVal }.count
 }
