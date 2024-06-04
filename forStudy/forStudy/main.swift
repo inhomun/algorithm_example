@@ -6,25 +6,23 @@
 //
 import Foundation
 
-func solution(_ n:Int, _ edge:[[Int]]) -> Int {
-    var graph = [Int:[Int]]()
-    for i in edge {
-        graph[i[0], default: []].append(i[1])
-        graph[i[1], default: []].append(i[0])
-    }
-    var distance = Array(repeating: -1, count: n)
-    var queue = [(Int, Int)]()
-    queue.append((1, 0))
-    
-    while !queue.isEmpty {
-        let (node, length) = queue.removeFirst()
-        if distance[node-1] == -1 {
-            distance[node-1] = length
-            for i in graph[node]! {
-                    queue.append((i, length + 1))
+func solution(_ a:[Int], _ b:[Int]) -> Int {
+    let sortA = a.sorted(by: <)
+    let sortB = b.sorted(by: <)
+    let max = sortB.count
+    var answer = 0
+    var start = 0
+    for i in sortA {
+        for j in start..<max {
+            if i < sortB[j] {
+                    start = j+1
+                    answer += 1
+                    break
             }
         }
+        if start == max {
+                break
+            }
     }
-    let maxVal = distance.max()!
-    return distance.filter{ $0 == maxVal }.count
+    return answer
 }
