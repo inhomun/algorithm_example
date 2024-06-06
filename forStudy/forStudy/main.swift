@@ -6,25 +6,30 @@
 //
 import Foundation
 
-func solution(_ genres:[String], _ plays:[Int]) -> [Int] {
-    var total = [String:Int]()
-    var info = [String:[(Int, Int)]]()
-    for i in 0..<genres.count {
-        total[genres[i], default: 0] += plays[i]
-        info[genres[i], default: []].append((i, plays[i]))
-    }
-    var answer = [Int]()
-    let sortedgenres = total.keys.sorted(by: { total[$0]! > total[$1]! })
-    for i in sortedgenres {
-        let a = info[i]!.sorted(by : { $0.1 > $1.1 } )
+func solution(_ stones: [Int], _ k: Int) -> Int {
+
+    var left = 1
+    var right = 200000000
+    while left < right {
+        let mid = (left + right) / 2
         var cnt = 0
-        for i in a {
-            if cnt == 2 {
-                break
+        for i in 0..<stones.count {
+            if stones[i] - mid <= 0 {
+                cnt += 1
+                if cnt >= k {
+                    break
+                }
             }
-            answer.append(i.0)
-            cnt += 1
+            else {
+                cnt = 0
+            }
         }
+            if cnt >= k {
+                right = mid
+            } else {
+                left = mid + 1
+            }
     }
-    return answer
+
+    return left
 }
