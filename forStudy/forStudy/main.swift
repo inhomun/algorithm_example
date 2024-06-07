@@ -6,30 +6,51 @@
 //
 import Foundation
 
-func solution(_ stones: [Int], _ k: Int) -> Int {
-
-    var left = 1
-    var right = 200000000
-    while left < right {
-        let mid = (left + right) / 2
-        var cnt = 0
-        for i in 0..<stones.count {
-            if stones[i] - mid <= 0 {
-                cnt += 1
-                if cnt >= k {
-                    break
+func solution(_ user_id:[String], _ banned_id:[String]) -> Int {
+    var a1 = [[Int]]()
+    for i in banned_id {
+        let name = Array(i)
+        var answer = [Int]()
+        for j in 0..<user_id.count {
+            if i.count == user_id[j].count {
+                let name2 = Array(user_id[j])
+                var cnt = 0
+                for k in 0..<user_id[j].count {
+                    if name[k] == name2[k] {
+                        cnt += 1
+                    }
+                    else if name[k] == "*" {
+                        cnt += 1
+                    }
+                    else {
+                        break
+                    }
+                    if cnt == user_id[j].count {
+                        answer.append(j)
+                    }
                 }
             }
+        }
+        a1.append(answer)
+    }
+    var sol = [[Int]]()
+    func dfs(_ arr: [Int],_ step: Int) {
+
+        if step == a1.count {
+            let solArr = arr.sorted(by: <)
+            sol.append(solArr)
+            return
+        }
+        for i in 0..<a1[step].count {
+            if arr.contains(a1[step][i]) {
+                continue
+            }
             else {
-                cnt = 0
+                dfs(arr + [a1[step][i]], step + 1)
             }
         }
-            if cnt >= k {
-                right = mid
-            } else {
-                left = mid + 1
-            }
+        return
     }
-
-    return left
+    dfs([], 0)
+    return Set(sol).count
 }
