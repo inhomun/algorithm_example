@@ -6,51 +6,31 @@
 //
 import Foundation
 
-func solution(_ user_id:[String], _ banned_id:[String]) -> Int {
-    var a1 = [[Int]]()
-    for i in banned_id {
-        let name = Array(i)
-        var answer = [Int]()
-        for j in 0..<user_id.count {
-            if i.count == user_id[j].count {
-                let name2 = Array(user_id[j])
-                var cnt = 0
-                for k in 0..<user_id[j].count {
-                    if name[k] == name2[k] {
-                        cnt += 1
-                    }
-                    else if name[k] == "*" {
-                        cnt += 1
-                    }
-                    else {
-                        break
-                    }
-                    if cnt == user_id[j].count {
-                        answer.append(j)
-                    }
-                }
+func solution(_ n:Int) -> [Int] {
+    var snail = Array( repeating: Array(repeating: 0, count: n), count: n)
+    var x = -1
+    var y = 0
+    var val = 0
+    var answer = [Int]()
+    for i in 0..<n {
+        for _ in i..<n {
+            if i % 3 == 0 {
+                x += 1
             }
-        }
-        a1.append(answer)
-    }
-    var sol = [[Int]]()
-    func dfs(_ arr: [Int],_ step: Int) {
-
-        if step == a1.count {
-            let solArr = arr.sorted(by: <)
-            sol.append(solArr)
-            return
-        }
-        for i in 0..<a1[step].count {
-            if arr.contains(a1[step][i]) {
-                continue
+            else if i % 3 == 1 {
+                y += 1
             }
             else {
-                dfs(arr + [a1[step][i]], step + 1)
+                x -= 1
+                y -= 1
             }
+            val += 1
+            snail[x][y] = val
         }
-        return
     }
-    dfs([], 0)
-    return Set(sol).count
+    for i in 0..<snail.count {
+        let arr = snail[i].filter{ $0 != 0}
+        answer += arr
+    }
+    return answer
 }
