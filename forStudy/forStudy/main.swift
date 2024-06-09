@@ -6,31 +6,27 @@
 //
 import Foundation
 
-func solution(_ n:Int) -> [Int] {
-    var snail = Array( repeating: Array(repeating: 0, count: n), count: n)
-    var x = -1
-    var y = 0
-    var val = 0
-    var answer = [Int]()
-    for i in 0..<n {
-        for _ in i..<n {
-            if i % 3 == 0 {
-                x += 1
+func solution(_ arr:[[Int]]) -> [Int] {
+    var answer : [Int] = [0, 0]
+    let arrValue = arr.count
+    func dfs(_ x: Int,_ y: Int,_ val: Int) {
+        if val == 1 { answer[arr[x-1][y-1]] += 1
+                    return }
+        let base = arr[x-val][y-val]
+        for i in x-val..<x {
+            for j in y-val..<y {
+                if arr[i][j] != base {
+                    dfs(x-val/2, y, val/2)
+                    dfs(x-val/2, y-val/2, val/2)
+                    dfs(x, y-val/2, val/2)
+                    dfs(x, y, val/2)
+                    return
+                }
             }
-            else if i % 3 == 1 {
-                y += 1
-            }
-            else {
-                x -= 1
-                y -= 1
-            }
-            val += 1
-            snail[x][y] = val
         }
+        answer[base] += 1
+        return
     }
-    for i in 0..<snail.count {
-        let arr = snail[i].filter{ $0 != 0}
-        answer += arr
-    }
+    dfs(arrValue, arrValue, arrValue)
     return answer
 }
