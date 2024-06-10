@@ -6,27 +6,25 @@
 //
 import Foundation
 
-func solution(_ arr:[[Int]]) -> [Int] {
-    var answer : [Int] = [0, 0]
-    let arrValue = arr.count
-    func dfs(_ x: Int,_ y: Int,_ val: Int) {
-        if val == 1 { answer[arr[x-1][y-1]] += 1
-                    return }
-        let base = arr[x-val][y-val]
-        for i in x-val..<x {
-            for j in y-val..<y {
-                if arr[i][j] != base {
-                    dfs(x-val/2, y, val/2)
-                    dfs(x-val/2, y-val/2, val/2)
-                    dfs(x, y-val/2, val/2)
-                    dfs(x, y, val/2)
-                    return
-                }
-            }
-        }
-        answer[base] += 1
-        return
+func solution(_ sticker:[Int]) -> Int{
+    if sticker.count == 1 || sticker.count == 2 {
+        return sticker.max()!
     }
-    dfs(arrValue, arrValue, arrValue)
+    var answer = 0
+    var arr1 = Array(repeating: 0, count: sticker.count)
+    var arr2 = Array(repeating: 0, count: sticker.count)
+    arr1[0] = sticker[0]
+    arr1[1] = max(sticker[0], sticker[1])
+    arr2[0] = 0
+    arr2[1] = sticker[1]
+    for i in 2..<sticker.count-1 {
+        arr1[i] = max(arr1[i-2]+sticker[i], arr1[i-1])
+    }
+    for i in 2..<sticker.count {
+        arr2[i] = max(arr2[i-2]+sticker[i], arr2[i-1])
+    }
+    // [실행] 버튼을 누르면 출력 값을 볼 수 있습니다.
+    print("Hello Swift")
+    answer = max(arr1.max()!, arr2.max()!)
     return answer
 }
