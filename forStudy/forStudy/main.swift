@@ -4,35 +4,36 @@
 //
 //  Created by 문인호 on 2023/01/27.
 //
-let input = readLine()!
-let prob = readLine()!.split(separator: " ").map{ Int($0)! }
-var times = [[Int]]()
-for _ in 0..<Int(input)! {
-    let value = readLine()!.split(separator: " ").map{ Int($0)! }
-    times.append(value)
-}
-times.sort(by : { if $0[0] == $1[0] { return $0[1] < $1[1]}
-                                else {
-                                    return $0[0] < $1[0]
-                                }})
-var answer = 0
-var arr = [times[0][0],times[0][1]]
-answer += arr[1]
-times.removeFirst()
-var cnt = 1
-for a in times {
-    if a[0] == arr[0] {
-        if cnt == prob[a[0]-1] {
-            continue
+func solution(_ m:String, _ musicinfos:[String]) -> String {
+    var tuple = [(name: String, time: Int)]()
+    var melody = m.replacingOccurrences(of: "C#", with: "c")
+        .replacingOccurrences(of: "D#", with: "d")
+        .replacingOccurrences(of: "F#", with: "f")
+        .replacingOccurrences(of: "G#", with: "g")
+        .replacingOccurrences(of: "A#", with: "a")
+        .replacingOccurrences(of: "B#", with: "b")
+    for music in musicinfos {
+        var info = music.components(separatedBy: ",")
+        let melodies = info[3].replacingOccurrences(of: "C#", with: "c")
+        .replacingOccurrences(of: "D#", with: "d")
+        .replacingOccurrences(of: "F#", with: "f")
+        .replacingOccurrences(of: "G#", with: "g")
+        .replacingOccurrences(of: "A#", with: "a")
+        .replacingOccurrences(of: "B#", with: "b")
+        .map { String($0) }
+        var start = info[0].components(separatedBy: ":")
+        var end = info[1].components(separatedBy: ":")
+        let time1 = Int(start[0])! * 60 + Int(start[1])!
+        let time2 = Int(end[0])! * 60 + Int(end[1])!
+        let playtime = time2 - time1
+        var tmp = ""
+        for i in 0..<playtime {
+            let index = i % melodies.count
+            tmp += melodies[index]
         }
-        answer += (a[1] - arr[1])
-        cnt += 1
+        if tmp.contains(melody) {
+            tuple.append((name: info[2], time: playtime))
+        }
     }
-    else {
-        cnt = 1
-        answer += 60
-    }
-    answer += a[1]
-    arr = [a[0],a[1]]
+    return tuple.max{$0.time < $1.time}?.name ?? "(None)"
 }
-print("\(answer)")
